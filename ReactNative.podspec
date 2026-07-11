@@ -10,11 +10,13 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => min_ios_version_supported }
+  s.platforms    = { :ios => "15.0" }
   s.source       = { :git => "https://github.com/pinecall/react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift,cpp}"
-  s.private_header_files = "ios/**/*.h"
+
+  # Native WebRTC (LiveKit-maintained prebuilt) used by PinecallCallController.
+  s.dependency "WebRTC-SDK", "~> 125.6422.07"
 
   install_modules_dependencies(s)
 end

@@ -84,3 +84,7 @@ android/generated
 
 # React Native Nitro Modules
 nitrogen/
+
+# example backend
+example/server/node_modules
+example/server/.env
