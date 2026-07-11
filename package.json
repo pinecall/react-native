@@ -47,14 +47,15 @@
     "type": "git",
     "url": "git+https://github.com/pinecall/react-native.git"
   },
-  "author": "Pinecall <hi@pinecall.io> (https://pinecall.io)",
+  "author": "Pinecall <hello@pinecall.io> (https://pinecall.io)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pinecall/react-native/issues"
   },
   "homepage": "https://github.com/pinecall/react-native#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
