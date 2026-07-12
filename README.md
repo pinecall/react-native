@@ -156,12 +156,24 @@ cd example && yarn ios --device   # real device — CallKit needs it
 |---|---|---|---|
 | iOS device | CallKit (native) | WebRTC.framework (native) | ✅ |
 | iOS simulator | — | — | ⛔ CallKit unsupported by the simulator |
-| Android | ConnectionService | native WebRTC | 🔜 roadmap |
+| Android device (API 26+) | your UI + self-managed Telecom | native WebRTC | ✅ (pending device test) |
+
+### Android notes
+
+Android's [self-managed `ConnectionService`](https://developer.android.com/reference/android/telecom/ConnectionService)
+is the CallKit equivalent — it gives your call native **audio routing, focus,
+Bluetooth, and Do-Not-Disturb** integration. The difference from iOS: **your app
+draws the in-call UI** (the system doesn't), so the same `CallScreen` you render
+from `CallClient` state *is* the call screen. WebRTC runs via
+`io.github.webrtc-sdk:android` (the same 125.x family as iOS). The plugin's
+manifest (permissions + the `ConnectionService`) auto-merges into your app; add
+a runtime request for `RECORD_AUDIO` + `MANAGE_OWN_CALLS`. Ringing a
+backgrounded/killed app still needs FCM (roadmap). Requires API 26+.
 
 ## Roadmap
 
-- Android (ConnectionService + native WebRTC)
-- PushKit/VoIP push — ring a killed/backgrounded app (paid Apple account)
+- Background/killed-app ringing — PushKit (iOS, paid Apple account) + FCM
+  high-priority push (Android) with a full-screen-intent notification
 - Mid-call `configure()` (hot-swap voice/language), sealed token metadata
 - Reconnection / ICE restarts, bluetooth route picker
 

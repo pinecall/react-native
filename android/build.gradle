@@ -48,4 +48,7 @@ android {
 
 dependencies {
   implementation "com.facebook.react:react-android"
+  // Native WebRTC (LiveKit-maintained prebuilt) for the call controller.
+  implementation "io.github.webrtc-sdk:android:125.6422.07"
+  implementation "androidx.annotation:annotation:1.8.0"
 }

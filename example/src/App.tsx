@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Pressable,
   StatusBar,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 import { CallClient, useCallClient } from '@pinecall/react-native';
 import { AGENTS, type AgentContact } from './agents';
@@ -18,6 +20,13 @@ const client = new CallClient();
 export default function App() {
   const call = useCallClient(client);
   const [activeAgent, setActiveAgent] = useState<AgentContact | null>(null);
+
+  // Android needs the mic granted at runtime (MANAGE_OWN_CALLS is a normal
+  // permission, auto-granted at install).
+  useEffect(() => {
+    if (Platform.OS !== 'android') return;
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO).catch(() => {});
+  }, []);
 
   function start(agent: AgentContact, direction: 'outgoing' | 'incoming') {
     setActiveAgent(agent);
