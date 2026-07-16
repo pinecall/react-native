@@ -8,6 +8,9 @@ name: Release
 #
 # NOTE: v0.2.0 (Android support) is committed but deliberately NOT tagged — npm
 # still serves 0.1.0. Pushing `v0.2.0` is what publishes it.
+#
+# Deps install with yarn 4 (see ci.yml); the publish itself uses npm, because
+# `npm publish --provenance` is what speaks OIDC to the registry.
 on:
   push:
     tags: ["v*"]
@@ -18,13 +21,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run lint
+          cache: yarn
+      - run: yarn install --immutable
+      - run: yarn typecheck
+      - run: yarn lint
       - name: tag matches package.json version
         run: |
           TAG="${GITHUB_REF_NAME#v}"
@@ -41,12 +45,14 @@ jobs:
       id-token: write        # OIDC, for Trusted Publishing + provenance
     steps:
       - uses: actions/checkout@v4
+      - run: corepack enable
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: yarn
           registry-url: https://registry.npmjs.org
-      - run: npm ci
+      - run: yarn install --immutable
+      - run: yarn prepare          # bob build → lib/, which `files` publishes
       - name: publish
         run: |
           case "${GITHUB_REF_NAME}" in
