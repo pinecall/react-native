@@ -3,10 +3,7 @@
 All notable changes to `@pinecall/react-native` are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
-## [0.2.0] — unreleased
-
-> Committed but **not yet on npm** (the registry's latest is 0.1.0). Push the
-> `v0.2.0` tag to publish it.
+## [0.2.0] — 2026-07-16
 
 ### Added — Android: native calls via self-managed ConnectionService
 

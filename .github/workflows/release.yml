@@ -6,9 +6,6 @@ name: Release
 #   repository pinecall/react-native · workflow release.yml · environment npm
 # Until that's configured this job fails at the publish step; nothing else breaks.
 #
-# NOTE: v0.2.0 (Android support) is committed but deliberately NOT tagged — npm
-# still serves 0.1.0. Pushing `v0.2.0` is what publishes it.
-#
 # Deps install with yarn 4 (see ci.yml); the publish itself uses npm, because
 # `npm publish --provenance` is what speaks OIDC to the registry.
 on:
