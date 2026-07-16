@@ -37,8 +37,9 @@ Add to `ios/<App>/Info.plist`:
 </array>
 ```
 
-> iOS only for now (Android on the roadmap). CallKit does **not** work on the
-> iOS simulator — test on a real device.
+> CallKit does **not** work on the iOS simulator — test on a real device.
+> Android is implemented (see [Android notes](#android-notes)) but has not yet
+> been run on a physical device.
 
 ## Backend: mint call tokens
 
@@ -154,9 +155,9 @@ cd example && yarn ios --device   # real device — CallKit needs it
 
 | Target | Call UI | Audio | Status |
 |---|---|---|---|
-| iOS device | CallKit (native) | WebRTC.framework (native) | ✅ |
+| iOS device | CallKit (native) | WebRTC.framework (native) | ✅ verified end-to-end |
 | iOS simulator | — | — | ⛔ CallKit unsupported by the simulator |
-| Android device (API 26+) | your UI + self-managed Telecom | native WebRTC | ✅ (pending device test) |
+| Android device (API 26+) | your UI + self-managed Telecom | native WebRTC | ⚠️ implemented, compiles, **not yet run on a device** |
 
 ### Android notes
 
