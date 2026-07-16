@@ -50,6 +50,10 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: yarn install --immutable
       - run: yarn prepare          # bob build → lib/, which `files` publishes
+      # Trusted Publishing (OIDC registry auth) needs npm >= 11.5.1 — the
+      # runner's bundled npm (10.x on Node 22) predates the feature entirely
+      # and silently falls back to an anonymous publish, which 404s.
+      - run: npm install -g npm@latest && npm --version
       - name: publish
         run: |
           case "${GITHUB_REF_NAME}" in
