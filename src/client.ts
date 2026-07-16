@@ -97,7 +97,7 @@ export class CallClient {
     if (this.wired) return;
     this.wired = true;
     this.offState = PinecallCall.onState(({ state, reason }) =>
-      this.onNativeState(state, reason),
+      this.onNativeState(state, reason)
     );
     this.offServer = PinecallCall.onServerEvent(({ data }) => {
       try {
@@ -175,10 +175,15 @@ export class CallClient {
     const msgs = this.state.messages;
     const last = msgs[msgs.length - 1];
     if (last?.role === 'user' && last.isInterim) {
-      this.set({ messages: [...msgs.slice(0, -1), { ...last, text, isInterim }] });
+      this.set({
+        messages: [...msgs.slice(0, -1), { ...last, text, isInterim }],
+      });
     } else {
       this.set({
-        messages: [...msgs, { id: msgs.length + 1, role: 'user', text, isInterim }],
+        messages: [
+          ...msgs,
+          { id: msgs.length + 1, role: 'user', text, isInterim },
+        ],
       });
     }
   }
@@ -187,10 +192,15 @@ export class CallClient {
     const msgs = this.state.messages;
     const idx = msgs.findIndex((m) => m.messageId === messageId);
     if (idx >= 0) {
-      this.set({ messages: msgs.map((m, i) => (i === idx ? { ...m, text } : m)) });
+      this.set({
+        messages: msgs.map((m, i) => (i === idx ? { ...m, text } : m)),
+      });
     } else {
       this.set({
-        messages: [...msgs, { id: msgs.length + 1, role: 'bot', text, messageId }],
+        messages: [
+          ...msgs,
+          { id: msgs.length + 1, role: 'bot', text, messageId },
+        ],
       });
     }
   }

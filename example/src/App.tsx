@@ -25,7 +25,9 @@ export default function App() {
   // permission, auto-granted at install).
   useEffect(() => {
     if (Platform.OS !== 'android') return;
-    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO).catch(() => {});
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
+    ).catch(() => {});
   }, []);
 
   function start(agent: AgentContact, direction: 'outgoing' | 'incoming') {
@@ -64,14 +66,22 @@ export default function App() {
             </View>
             {/* Agent calls YOU — native incoming ring */}
             <Pressable
-              style={({ pressed }) => [styles.action, styles.actionRing, pressed && styles.pressed]}
+              style={({ pressed }) => [
+                styles.action,
+                styles.actionRing,
+                pressed && styles.pressed,
+              ]}
               onPress={() => start(a, 'incoming')}
             >
               <Text style={styles.actionIcon}>🔔</Text>
             </Pressable>
             {/* You call the agent — native outgoing call */}
             <Pressable
-              style={({ pressed }) => [styles.action, styles.actionCall, pressed && styles.pressed]}
+              style={({ pressed }) => [
+                styles.action,
+                styles.actionCall,
+                pressed && styles.pressed,
+              ]}
               onPress={() => start(a, 'outgoing')}
             >
               <Text style={styles.actionIcon}>📞</Text>
@@ -81,12 +91,16 @@ export default function App() {
       </View>
 
       <View style={styles.legend}>
-        <Text style={styles.legendText}>📞 you call · 🔔 the agent calls you</Text>
+        <Text style={styles.legendText}>
+          📞 you call · 🔔 the agent calls you
+        </Text>
       </View>
 
       {call.error ? <Text style={styles.error}>{call.error}</Text> : null}
 
-      {inCall && activeAgent ? <CallScreen agent={activeAgent} call={call} /> : null}
+      {inCall && activeAgent ? (
+        <CallScreen agent={activeAgent} call={call} />
+      ) : null}
     </SafeAreaView>
   );
 }
@@ -94,7 +108,12 @@ export default function App() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#f6f6f8', paddingHorizontal: 20 },
   head: { paddingTop: 16, paddingBottom: 20 },
-  kicker: { fontSize: 12, fontWeight: '700', letterSpacing: 2, color: '#7856ff' },
+  kicker: {
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 2,
+    color: '#7856ff',
+  },
   title: { fontSize: 36, fontWeight: '800', color: '#0b0b10', marginTop: 4 },
   subtitle: { fontSize: 15, color: '#8a8a8e', marginTop: 4 },
   list: { gap: 12 },

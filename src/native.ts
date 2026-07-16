@@ -14,7 +14,7 @@ const PinecallCallModule = NativeModules.PinecallCall
         get() {
           throw new Error(LINKING_ERROR);
         },
-      },
+      }
     );
 
 const emitter = NativeModules.PinecallCall
@@ -57,7 +57,9 @@ export const PinecallCall = {
     return () => sub?.remove();
   },
   onServerEvent(cb: (e: ServerEvent) => void): () => void {
-    const sub = emitter?.addListener('serverEvent', (e) => cb(e as ServerEvent));
+    const sub = emitter?.addListener('serverEvent', (e) =>
+      cb(e as ServerEvent)
+    );
     return () => sub?.remove();
   },
 };

@@ -10,5 +10,10 @@ export interface AgentContact {
  * runs and mints tokens for (the bundled backend runs `assistant`).
  */
 export const AGENTS: AgentContact[] = [
-  { id: 'assistant', name: 'Assistant', tagline: 'AI voice agent', avatar: '🤖' },
+  {
+    id: 'assistant',
+    name: 'Assistant',
+    tagline: 'AI voice agent',
+    avatar: '🤖',
+  },
 ];

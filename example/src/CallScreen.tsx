@@ -1,5 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Pressable, Animated, Easing } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Animated,
+  Easing,
+} from 'react-native';
 import type { UseCallResult } from '@pinecall/react-native';
 import type { AgentContact } from './agents';
 
@@ -27,14 +34,20 @@ export default function CallScreen({
 }) {
   const connected = call.status === 'connected';
   const speaking = call.phase === 'speaking';
-  const statusLine = connected ? fmt(call.duration) : STATUS_LABEL[call.status] ?? '';
+  const statusLine = connected
+    ? fmt(call.duration)
+    : (STATUS_LABEL[call.status] ?? '');
 
   // Pulse the halo while the agent is speaking.
   const pulse = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     if (!speaking) {
       pulse.stopAnimation();
-      Animated.timing(pulse, { toValue: 0, duration: 250, useNativeDriver: true }).start();
+      Animated.timing(pulse, {
+        toValue: 0,
+        duration: 250,
+        useNativeDriver: true,
+      }).start();
       return;
     }
     const loop = Animated.loop(
@@ -51,14 +64,21 @@ export default function CallScreen({
           easing: Easing.in(Easing.ease),
           useNativeDriver: true,
         }),
-      ]),
+      ])
     );
     loop.start();
     return () => loop.stop();
   }, [speaking, pulse]);
 
   const haloStyle = {
-    transform: [{ scale: pulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.35] }) }],
+    transform: [
+      {
+        scale: pulse.interpolate({
+          inputRange: [0, 1],
+          outputRange: [1, 1.35],
+        }),
+      },
+    ],
     opacity: pulse.interpolate({ inputRange: [0, 1], outputRange: [0.45, 0] }),
   };
 
@@ -86,9 +106,16 @@ export default function CallScreen({
         {call.messages.slice(-6).map((m) => (
           <View
             key={m.id}
-            style={[styles.bubble, m.role === 'bot' ? styles.bubbleBot : styles.bubbleUser]}
+            style={[
+              styles.bubble,
+              m.role === 'bot' ? styles.bubbleBot : styles.bubbleUser,
+            ]}
           >
-            <Text style={m.role === 'bot' ? styles.bubbleBotText : styles.bubbleUserText}>
+            <Text
+              style={
+                m.role === 'bot' ? styles.bubbleBotText : styles.bubbleUserText
+              }
+            >
               {m.text}
             </Text>
           </View>
@@ -139,7 +166,9 @@ function CircleButton({
         pressed && styles.btnPressed,
       ]}
     >
-      <Text style={[styles.btnIcon, hangup && styles.btnIconHangup]}>{icon}</Text>
+      <Text style={[styles.btnIcon, hangup && styles.btnIconHangup]}>
+        {icon}
+      </Text>
     </Pressable>
   );
 }
@@ -161,7 +190,12 @@ const styles = StyleSheet.create({
   glowTop: { top: -180, backgroundColor: 'rgba(120,86,255,0.22)' },
   glowBottom: { bottom: -220, backgroundColor: 'rgba(52,199,89,0.14)' },
   header: { alignItems: 'center' },
-  avatarWrap: { alignItems: 'center', justifyContent: 'center', width: 160, height: 160 },
+  avatarWrap: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 160,
+    height: 160,
+  },
   halo: {
     position: 'absolute',
     width: 140,
@@ -180,7 +214,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatarText: { fontSize: 62 },
-  name: { color: '#fff', fontSize: 30, fontWeight: '700', marginTop: 22, letterSpacing: 0.2 },
+  name: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: '700',
+    marginTop: 22,
+    letterSpacing: 0.2,
+  },
   statusPill: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -190,9 +230,19 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: 'rgba(255,255,255,0.08)',
   },
-  dot: { width: 7, height: 7, borderRadius: 4, backgroundColor: 'rgba(255,255,255,0.5)', marginRight: 8 },
+  dot: {
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    marginRight: 8,
+  },
   dotLive: { backgroundColor: '#34c759' },
-  status: { color: 'rgba(255,255,255,0.85)', fontSize: 14, fontVariant: ['tabular-nums'] },
+  status: {
+    color: 'rgba(255,255,255,0.85)',
+    fontSize: 14,
+    fontVariant: ['tabular-nums'],
+  },
   transcript: {
     flex: 1,
     width: '100%',
@@ -201,13 +251,22 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 12,
   },
-  bubble: { paddingVertical: 11, paddingHorizontal: 15, borderRadius: 20, maxWidth: '82%' },
+  bubble: {
+    paddingVertical: 11,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    maxWidth: '82%',
+  },
   bubbleBot: {
     alignSelf: 'flex-start',
     backgroundColor: 'rgba(255,255,255,0.09)',
     borderBottomLeftRadius: 6,
   },
-  bubbleUser: { alignSelf: 'flex-end', backgroundColor: '#2f6bff', borderBottomRightRadius: 6 },
+  bubbleUser: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#2f6bff',
+    borderBottomRightRadius: 6,
+  },
   bubbleBotText: { color: '#f2f2f7', fontSize: 15, lineHeight: 20 },
   bubbleUserText: { color: '#fff', fontSize: 15, lineHeight: 20 },
   actions: { flexDirection: 'row', gap: 28 },

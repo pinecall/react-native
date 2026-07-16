@@ -9,11 +9,7 @@ export interface TranscriptMessage {
 }
 
 export type CallStatus =
-  | 'idle'
-  | 'ringing'
-  | 'connecting'
-  | 'connected'
-  | 'error';
+  'idle' | 'ringing' | 'connecting' | 'connected' | 'error';
 
 export type CallPhase = 'idle' | 'listening' | 'thinking' | 'speaking';
 
@@ -53,9 +49,4 @@ export interface StartCallOptions {
 
 /** Raw native events emitted by the plugin. */
 export type NativeCallState =
-  | 'ringing'
-  | 'connecting'
-  | 'connected'
-  | 'ended'
-  | 'declined'
-  | 'error';
+  'ringing' | 'connecting' | 'connected' | 'ended' | 'declined' | 'error';
